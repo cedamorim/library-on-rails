@@ -1,0 +1,51 @@
+version: '3.1'
+
+services:
+  backend:
+    image: ruby:2.7.3
+    working_dir: "/app"
+    container_name: library_on_rails_backend
+    volumes:
+      - ./backend:/app
+      - /app/tmp
+      - gems:/usr/local/bundle
+    ports:
+      - "3002:3002"
+      - "3035:3035"
+    command: "bash -c 'rm -rf ./tmp/pids/server.pid; rm -rf tmp/cache/bootsnap-*; bundle exec bin/rails s -b 0.0.0.0 -p 3002'"
+    depends_on:
+      - mysql
+    environment:
+      - API_KEY=${API_KEY-564ae29cae546525d11f1edf2f78448fe09c594b}
+      - API_URL=${API_URL-http://127.0.0.1:3000/api}
+      - DATABASE_HOST=${DATABASE_HOST-mysql}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD-password}
+      - RAILS_ENV=production
+
+  frontend:
+    image: node:latest
+    working_dir: "/app"
+    container_name: library_on_rails_frontend
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    command: "bash -c 'npm start'"
+    depends_on:
+      - backend
+    environment: 
+      - HOST=0.0.0.0
+      - PORT=3000
+
+  mysql:
+    image: mysql:8.0.23
+    container_name: ruby-on-rails-library_on_rails_mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD-password}
+    volumes:
+      - mysql:/var/lib/mysql
+
+volumes:
+  gems:
+  mysql:
