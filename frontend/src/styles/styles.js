@@ -1,6 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
+
+  icon: {
+    color: 'white'
+  },
+
   root: {
     display: "flex",
     flexDirection: "column",
@@ -72,6 +77,40 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+
+  search : {
+    padding: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    width: 400,
+    marginBottom: '20px',
+    marginTop: '20px'
+  },
+
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
+  },
+
+  iconButton: {
+    padding: 10,
+  },
+
+  divider: {
+    height: 28,
+    margin: 4,
+  },
+  
+  dialogImage: {
+    float: 'left',
+    marginRight: '10px',
+    marginBottom: '10px'
+  },
+
+  dialogText: {
+    textAlign: 'justify'
+  }
+
 }));
 
 export default useStyles;
