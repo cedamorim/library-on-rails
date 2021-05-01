@@ -16,11 +16,11 @@ services:
     depends_on:
       - mysql
     environment:
-      - API_KEY=${API_KEY-564ae29cae546525d11f1edf2f78448fe09c594b}
-      - API_URL=${API_URL-http://127.0.0.1:3000/api}
-      - DATABASE_HOST=${DATABASE_HOST-mysql}
-      - DATABASE_PASSWORD=${DATABASE_PASSWORD-password}
-      - RAILS_ENV=production
+      - SECRET_HASH=${SECRET_HASH}
+      - API_URL=${API_URL-http://127.0.0.1:3002/api}
+      - DATABASE_HOST=mysql
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - RAILS_ENV=development
 
   frontend:
     image: node:latest
@@ -42,7 +42,7 @@ services:
     container_name: ruby-on-rails-library_on_rails_mysql
     command: --default-authentication-plugin=mysql_native_password
     environment:
-      - POSTGRES_PASSWORD=${DATABASE_PASSWORD-password}
+      - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
     volumes:
       - mysql:/var/lib/mysql
 
