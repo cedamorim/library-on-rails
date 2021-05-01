@@ -1,33 +1,28 @@
-import { AppBar, Button, Toolbar, Typography, Link } from "@material-ui/core";
+import { AppBar, Toolbar, Typography, Link } from "@material-ui/core";
 import { useHistory } from "react-router";
 import useStyles from "../styles/styles";
+import ButtonNav from "./ButtonNav";
 
 const Nav = () => {
   const classes = useStyles();
   const history = useHistory();
 
-  const home = (e) => {
+  const onHome = (e) => {
     e.preventDefault();
 
     history.push("/");
-  };
-
-  const login = () => {
-    history.push("/login");
   };
 
   return (
     <AppBar position="sticky">
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
-          <Link href="#" onClick={home} className={classes.linkTitle}>
+          <Link href="#" onClick={onHome} className={classes.linkTitle}>
             Library On Rails
           </Link>
         </Typography>
 
-        <Button onClick={login} color="inherit">
-          Login
-        </Button>
+        <ButtonNav />
       </Toolbar>
     </AppBar>
   );
