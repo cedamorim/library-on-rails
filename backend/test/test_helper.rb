@@ -1,8 +1,18 @@
 ENV['RAILS_ENV'] ||= 'test'
-require_relative "../config/environment"
-require "rails/test_help"
+require_relative '../config/environment'
+require 'rails/test_help'
+
+module TokenHelper
+  def fetch_token(user)
+    post '/api/auth', params: user
+
+    JSON.parse(response.body.to_s)['token']
+  end
+end
 
 class ActiveSupport::TestCase
+  include TokenHelper
+
   # Run tests in parallel with specified workers
   parallelize(workers: :number_of_processors)
 

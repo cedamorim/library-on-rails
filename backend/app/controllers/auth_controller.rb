@@ -1,4 +1,6 @@
 class AuthController < ApplicationController
+  skip_before_action :validate_token, only: %i[create]
+
   def create
     @user = User.find_by(email: auth_params[:email])
 

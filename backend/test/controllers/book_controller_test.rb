@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class BookControllerTest < ActionDispatch::IntegrationTest
+  def headers
+    @headers ||= { 'Authorization': "Bearer #{fetch_token({ email: 'admin@admin.com', password: '123456' })}" }
+  end
+
   # GET
   test 'deve retornar o index com sucesso' do
     get '/api/book'
@@ -29,7 +33,7 @@ class BookControllerTest < ActionDispatch::IntegrationTest
       author: 'The Painted Veil',
       description: 'Hello? Hello? Anybody home? Huh? Think, McFly.',
       image_url: 'https://placehold.it/100x100.png'
-    }
+    }, headers: headers
 
     assert_response :unprocessable_entity
     assert_match 'title', @response.body
@@ -41,7 +45,7 @@ class BookControllerTest < ActionDispatch::IntegrationTest
       author: 'The Painted Veil',
       description: 'Hello? Hello? Anybody home? Huh? Think, McFly.',
       image_url: 'https://placehold.it/100x100.png'
-    }
+    }, headers: headers
 
     assert_response :unprocessable_entity
     assert_match 'title', @response.body
@@ -52,7 +56,7 @@ class BookControllerTest < ActionDispatch::IntegrationTest
       title: 'titulo teste',
       description: 'Hello? Hello? Anybody home? Huh? Think, McFly.',
       image_url: 'https://placehold.it/100x100.png'
-    }
+    }, headers: headers
 
     assert_response :unprocessable_entity
     assert_match 'author', @response.body
@@ -64,7 +68,7 @@ class BookControllerTest < ActionDispatch::IntegrationTest
       author: 'au',
       description: 'Hello? Hello? Anybody home? Huh? Think, McFly.',
       image_url: 'https://placehold.it/100x100.png'
-    }
+    }, headers: headers
 
     assert_response :unprocessable_entity
     assert_match 'author', @response.body
@@ -75,7 +79,7 @@ class BookControllerTest < ActionDispatch::IntegrationTest
       title: 'titulo teste',
       author: 'autor teste',
       description: 'Hello? Hello? Anybody home? Huh? Think, McFly.'
-    }
+    }, headers: headers
 
     assert_response :unprocessable_entity
     assert_match 'image_url', @response.body
@@ -87,7 +91,7 @@ class BookControllerTest < ActionDispatch::IntegrationTest
       author: 'autor teste',
       description: 'Hello? Hello? Anybody home? Huh? Think, McFly.',
       image_url: 'https://placehold.it/100x100.png'
-    }
+    }, headers: headers
 
     assert_response :created
     assert_match 'title', @response.body
@@ -101,7 +105,7 @@ class BookControllerTest < ActionDispatch::IntegrationTest
       author: 'autor teste',
       description: 'Hello? Hello? Anybody home? Huh? Think, McFly.',
       image_url: 'https://placehold.it/100x100.png'
-    }
+    }, headers: headers
 
     assert_response :unprocessable_entity
     assert_match 'title', @response.body
@@ -113,7 +117,7 @@ class BookControllerTest < ActionDispatch::IntegrationTest
       author: 'autor teste',
       description: 'Hello? Hello? Anybody home? Huh? Think, McFly.',
       image_url: 'https://placehold.it/100x100.png'
-    }
+    }, headers: headers
 
     assert_response :unprocessable_entity
     assert_match 'title', @response.body
@@ -125,7 +129,7 @@ class BookControllerTest < ActionDispatch::IntegrationTest
       author: '',
       description: 'Hello? Hello? Anybody home? Huh? Think, McFly.',
       image_url: 'https://placehold.it/100x100.png'
-    }
+    }, headers: headers
 
     assert_response :unprocessable_entity
     assert_match 'author', @response.body
@@ -137,7 +141,7 @@ class BookControllerTest < ActionDispatch::IntegrationTest
       author: 'ab',
       description: 'Hello? Hello? Anybody home? Huh? Think, McFly.',
       image_url: 'https://placehold.it/100x100.png'
-    }
+    }, headers: headers
 
     assert_response :unprocessable_entity
     assert_match 'author', @response.body
@@ -149,7 +153,7 @@ class BookControllerTest < ActionDispatch::IntegrationTest
       author: 'autor',
       description: 'Hello? Hello? Anybody home? Huh? Think, McFly.',
       image_url: ''
-    }
+    }, headers: headers
 
     assert_response :unprocessable_entity
     assert_match 'image_url', @response.body
@@ -162,7 +166,7 @@ class BookControllerTest < ActionDispatch::IntegrationTest
       author: 'autor',
       description: 'Hello? Hello? Anybody home? Huh? Think, McFly.',
       image_url: 'https://placehold.it/100x100.png'
-    }
+    }, headers: headers
 
     assert_response :no_content
     assert_empty @response.body
@@ -171,14 +175,14 @@ class BookControllerTest < ActionDispatch::IntegrationTest
 
   # DELETE
   test 'não deve ser possível deletar um registro que não existe' do
-    delete '/api/book/32145678'
+    delete '/api/book/32145678', headers: headers
 
     assert_response :not_found
   end
 
   test 'deve ser possível deletar um livro' do
     id = books(:one).id
-    delete "/api/book/#{id}"
+    delete "/api/book/#{id}", headers: headers
 
     assert_response :no_content
     assert_empty @response.body

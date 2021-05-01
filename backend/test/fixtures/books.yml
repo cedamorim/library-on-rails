@@ -8,7 +8,7 @@ one: {
   title: "Livro 1",
   author: "Autor 1",
   description: "....",
-  image_url: "http://"
+  image_url: "https://placehold.it/100x100.png"
 }
 # column: value
 #
@@ -16,6 +16,6 @@ two: {
 title: "Livro 2",
   author: "Autor 2",
   description: "....",
-  image_url: "http://"
+  image_url: "https://placehold.it/100x100.png"
 }
 # column: value
