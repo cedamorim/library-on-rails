@@ -1,4 +1,5 @@
 class BookController < ApplicationController
+  skip_before_action :validate_token, only: %i[index]
   before_action :find_book, only: %i[update destroy]
 
   def index
