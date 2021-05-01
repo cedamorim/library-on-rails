@@ -6,4 +6,6 @@ class Book < ApplicationRecord
   validates :author, length: { minimum: 3 }, if: proc { |record| record.author? }
 
   validates :image_url, presence: true, allow_blank: false
+
+  scope :search, ->(author) { where('author like ?', "%#{author}%") if author }
 end

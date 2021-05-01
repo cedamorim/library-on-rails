@@ -1,0 +1,1 @@
+json.array! @books, :id, :title, :author, :image_url, :description

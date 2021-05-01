@@ -1,0 +1,1 @@
+json.call(@book, :id, :title, :author, :image_url, :description)
