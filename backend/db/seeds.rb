@@ -16,7 +16,7 @@ User.create!({
   Book.create!({
                  title: Faker::Book.title,
                  author: Faker::Book.author,
-                 image_url: Faker::Placeholdit.image(size: '100x100'),
+                 image_url: 'https://via.placeholder.com/200x250',
                  description: Faker::Movies::BackToTheFuture.quote
                })
 end
