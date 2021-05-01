@@ -3,9 +3,17 @@ pt-BR:
   activerecord:
     model:
       user: 'Usuário'
+      book: 'Livro'
     attributes:
       user:
         password: 'Senha'
+        name: 'Nome'
+        email: 'E-mail'
+      book:
+        title: 'Titulo'
+        author: 'Autor'
+        description: 'Descrição'
+        image_url: 'Url da imagem'
     errors:
       messages:
         record_invalid: 'A validação falhou: %{errors}'
