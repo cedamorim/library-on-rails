@@ -9,6 +9,10 @@ const BookApi = {
     return await this.try(api.get(`/books/${id}`));
   },
 
+  async create(params) {
+    return await this.try(api.post("/books", params));
+  },
+
   async update(id, params) {
     return await this.try(api.patch(`/books/${id}`, params));
   },

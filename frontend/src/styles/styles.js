@@ -1,9 +1,8 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-
   icon: {
-    color: 'white'
+    color: "white",
   },
 
   root: {
@@ -22,30 +21,30 @@ const useStyles = makeStyles((theme) => ({
   },
 
   title: {
-    flexGrow: 1
+    flexGrow: 1,
   },
-  
+
   linkTitle: {
-    color: theme.palette.background.paper
+    color: theme.palette.background.paper,
   },
 
   container: {
     paddingTop: "10px;",
-    paddingBottom: "10px;"
+    paddingBottom: "10px;",
   },
 
   loading: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginTop: "100px"
+    marginTop: "100px",
   },
 
   books: {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
-    overflow: "hidden"
+    overflow: "hidden",
   },
 
   book: {
@@ -53,15 +52,15 @@ const useStyles = makeStyles((theme) => ({
   },
 
   bookCard: {
-    padding: '0px',
-    margin: '2px'
+    padding: "0px",
+    margin: "2px",
   },
 
   bookButtons: {
-    padding: '0px',
-    paddingTop: '8px',
-    paddingBottom: '8px',
-    justifyContent: 'center',
+    padding: "0px",
+    paddingTop: "8px",
+    paddingBottom: "8px",
+    justifyContent: "center",
   },
 
   footer: {
@@ -91,13 +90,13 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 
-  search : {
-    padding: '2px 4px',
-    display: 'flex',
-    alignItems: 'center',
+  search: {
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center",
     width: 400,
-    marginBottom: '20px',
-    marginTop: '20px'
+    marginBottom: "20px",
+    marginTop: "20px",
   },
 
   input: {
@@ -113,25 +112,30 @@ const useStyles = makeStyles((theme) => ({
     height: 28,
     margin: 4,
   },
-  
+
   dialogImage: {
-    float: 'left',
-    marginRight: '10px',
-    marginBottom: '10px'
+    float: "left",
+    marginRight: "10px",
+    marginBottom: "10px",
   },
 
   dialogText: {
-    textAlign: 'justify'
+    textAlign: "justify",
   },
 
   buttonEdit: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    '& > button': {
-      marginLeft: '10px'
-    }
-  }
+    display: "flex",
+    justifyContent: "flex-end",
+    "& > button": {
+      marginLeft: "10px",
+    },
+  },
 
+  addButton: {
+    position: "fixed",
+    bottom: "20px",
+    right: "20px",
+  },
 }));
 
 export default useStyles;
