@@ -30,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   container: {
-    paddingTop: "4px;"
+    paddingTop: "10px;",
+    paddingBottom: "10px;"
   },
 
   loading: {
@@ -44,11 +45,23 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
-    overflow: "hidden",
+    overflow: "hidden"
   },
 
   book: {
     padding: "4px;",
+  },
+
+  bookCard: {
+    padding: '0px',
+    margin: '2px'
+  },
+
+  bookButtons: {
+    padding: '0px',
+    paddingTop: '8px',
+    paddingBottom: '8px',
+    justifyContent: 'center',
   },
 
   footer: {
