@@ -2,26 +2,27 @@ import {
   Button,
   Card,
   CardActions,
-  GridListTile,
-  GridListTileBar,
-  IconButton,
-  Tooltip,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
+  GridListTile,
+  GridListTileBar,
+  IconButton,
+  Tooltip,
   useMediaQuery,
 } from "@material-ui/core";
-import InfoIcon from "@material-ui/icons/Info";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
 import { useEffect, useState } from "react";
+
+import DeleteIcon from "@material-ui/icons/Delete";
+import DialogBook from "./DialogBook";
+import EditIcon from "@material-ui/icons/Edit";
+import InfoIcon from "@material-ui/icons/Info";
+import auth from "../auth";
 import { useHistory } from "react-router";
 import useStyles from "../styles/styles";
-import DialogBook from "./DialogBook";
 import { useTheme } from "@material-ui/core/styles";
-import auth from "../auth";
 
 const DialogDelete = ({ show, book, onClose, onDeleted }) => {
   const [open, setOpen] = useState(false);
@@ -97,7 +98,7 @@ const ButtonActions = ({ book, onDeleted }) => {
     );
   }
 
-  return "";
+  return <></>;
 };
 
 const Book = ({ book, onDeleted }) => {
@@ -116,7 +117,7 @@ const Book = ({ book, onDeleted }) => {
       />
       <Card className={classes.bookCard} elevation={0} square>
         <GridListTile key={book.title}>
-          <img src={"https://via.placeholder.com/200x250"} alt={book.title} />
+          <img src={book.image_url || "https://via.placeholder.com/200x250"} alt={book.title} className={classes.bookImage} />
           <GridListTileBar
             title={book.title}
             subtitle={<span>{book.author}</span>}

@@ -2,7 +2,7 @@ import api from "../api";
 
 const BookApi = {
   async index(params) {
-    return await this.try(api.get("/books", params));
+    return await this.try(api.get("/books", { params }));
   },
 
   async get(id) {

@@ -1,47 +1,89 @@
-import BookApi from "../api/book";
-import Hero from "../layout/Hero";
-import Books from "../components/Books";
-import Loading from "../components/Loading";
-import React, { useState, useEffect } from "react";
-import { Container } from "@material-ui/core";
-import useStyles from "../styles/styles";
 import Add from "../components/Add";
+import BookApi from "../api/book";
+import Books from "../components/Books";
+import { Container } from "@material-ui/core";
+import Hero from "../layout/Hero";
+import Pagination from "@material-ui/lab/Pagination";
+import Store from "../store";
+import { useEffect } from "react";
+import { useStoreState } from "pullstate";
+import useStyles from "../styles/styles";
 
 const Index = () => {
   const classes = useStyles();
-  const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { books, booksCount, params, currentPage, isLoading } = useStoreState(
+    Store
+  );
 
-  const fetchData = async () => {
-    const result = await BookApi.index();
+  const fetchData = async (page) => {
+    Store.update((s) => {
+      s.isLoading = true;
+    });
+
+    const result = await BookApi.index({ ...params, page });
 
     if (result.data) {
-      setBooks(result.data);
+      Store.update((s) => {
+        s.books = result.data.books;
+        s.booksCount = result.data.books_count;
+        s.currentPage = page;
+        s.isLoading = false;
+      });
     } else {
-      //avisar que aconteceu algum erro
+      Store.update((s) => {
+        s.isLoading = false;
+        s.error = "Ops, aconteceu um erro ao carregar os dados da página";
+      });
     }
 
-    setLoading(false);
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
 
   const onDeleted = async (bookDeleted) => {
     const result = await BookApi.delete(bookDeleted.id);
 
     if (result.error) {
-      // avisar o usuario que aconteceu o erro
-      return;
+      Store.update((s) => {
+        s.error = result.error;
+      });
     }
 
-    setBooks(books.filter((book) => book.id !== bookDeleted.id));
+    Store.update((s) => {
+      s.books = books.filter((book) => book.id !== bookDeleted.id);
+    });
   };
 
-  useEffect(() => fetchData(), []);
+  const onChange = (e, page) => {
+    if (page !== currentPage) {
+      fetchData(page);
+    }
+  };
+
+  useEffect(() => fetchData(1), []);
 
   return (
     <>
       <Hero />
-      <Container maxWidth="lg" className={classes.container}>
-        {loading ? <Loading /> : <Books books={books} onDeleted={onDeleted} />}
+      <Container
+        maxWidth="lg"
+        className={`${classes.container} ${
+          isLoading ? classes.booksLoading : ""
+        }`}
+      >
+        <Books books={books} onDeleted={onDeleted} />
+        {booksCount > 0 ? (
+          <Pagination
+            count={Math.round(booksCount / 50)}
+            page={currentPage}
+            variant="outlined"
+            color="primary"
+            className={classes.pagination}
+            onChange={onChange}
+            disabled={isLoading}
+          />
+        ) : (
+          <></>
+        )}
         <Add />
       </Container>
     </>

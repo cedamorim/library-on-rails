@@ -1,7 +1,9 @@
-import { AppBar, Toolbar, Typography, Link } from "@material-ui/core";
+import { AppBar, Link, Toolbar, Typography } from "@material-ui/core";
+
+import ButtonNav from "./ButtonNav";
+import Search from "../components/Search";
 import { useHistory } from "react-router";
 import useStyles from "../styles/styles";
-import ButtonNav from "./ButtonNav";
 
 const Nav = () => {
   const classes = useStyles();
@@ -21,7 +23,7 @@ const Nav = () => {
             Library On Rails
           </Link>
         </Typography>
-
+        <Search />
         <ButtonNav />
       </Toolbar>
     </AppBar>
