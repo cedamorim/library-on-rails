@@ -7,5 +7,8 @@ class Book < ApplicationRecord
 
   validates :image_url, presence: true, allow_blank: false
 
-  scope :search, ->(author) { where('author like ?', "%#{author}%") if author }
+  scope :search, lambda { |search|
+                   where('author like ? or title like ?', "%#{search}%", "%#{search}%")
+                     .order('title')
+                 }
 end

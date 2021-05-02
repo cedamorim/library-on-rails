@@ -2,6 +2,7 @@ import Add from "../components/Add";
 import BookApi from "../api/book";
 import Books from "../components/Books";
 import { Container } from "@material-ui/core";
+import Filter from "../components/Filter";
 import Hero from "../layout/Hero";
 import Pagination from "@material-ui/lab/Pagination";
 import Store from "../store";
@@ -11,7 +12,7 @@ import useStyles from "../styles/styles";
 
 const Index = () => {
   const classes = useStyles();
-  const { books, booksCount, params, currentPage, isLoading } = useStoreState(
+  const { books, booksCount, filter, params, currentPage, isLoading } = useStoreState(
     Store
   );
 
@@ -59,6 +60,12 @@ const Index = () => {
     }
   };
 
+  const filterBooksBy = () => {
+    const regex = new RegExp(`${filter}`, 'gi');
+
+    return [...books].filter((book) => regex.test(book.title) || regex.test(book.author))
+  }
+
   useEffect(() => fetchData(1), []);
 
   return (
@@ -70,15 +77,18 @@ const Index = () => {
           isLoading ? classes.booksLoading : ""
         }`}
       >
-        <Books books={books} onDeleted={onDeleted} />
+        <Filter />
+        <Books books={filterBooksBy()} onDeleted={onDeleted} />
         {booksCount > 0 ? (
           <Pagination
-            count={Math.round(booksCount / 50)}
+            count={Math.ceil(booksCount / 50)}
             page={currentPage}
             variant="outlined"
             color="primary"
             className={classes.pagination}
             onChange={onChange}
+            showFirstButton 
+            showLastButton
             disabled={isLoading}
           />
         ) : (

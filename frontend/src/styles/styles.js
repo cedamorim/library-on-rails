@@ -174,6 +174,20 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: "center",
     },
   },
+
+  filter: {
+    marginBottom: '30px',
+    marginTop: '20px',
+    display: 'flex',
+    '& .MuiTextField-root': {
+      marginRight: '10px',
+      flex: 1
+    },
+    '& .MuiTextField-root:first-child': {
+      flex: 2
+    }
+  }
+
 }));
 
 export default useStyles;
