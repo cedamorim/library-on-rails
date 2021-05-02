@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   skip_before_action :validate_token, only: %i[index]
-  before_action :find_book, only: %i[update destroy]
+  before_action :find_book, only: %i[update destroy show]
 
   def index
     @books = Book.paginate(filter_params[:page])
@@ -14,6 +14,8 @@ class BooksController < ApplicationController
 
     render_errors
   end
+
+  def show; end
 
   def update
     return if @book.update(book_params)
