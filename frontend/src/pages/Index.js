@@ -23,13 +23,24 @@ const Index = () => {
     setLoading(false);
   };
 
+  const onDeleted = async (bookDeleted) => {
+    const result = await BookApi.delete(bookDeleted.id);
+
+    if (result.error) {
+      // avisar o usuario que aconteceu o erro
+      return;
+    }
+    
+    setBooks(books.filter(book => book.id !== bookDeleted.id));
+  }
+
   useEffect(() => fetchData(), []);
 
   return (
     <>
       <Hero />
       <Container maxWidth="lg" className={classes.container}>
-        {loading ? <Loading /> : <Books books={books} /> }
+        {loading ? <Loading /> : <Books books={books} onDeleted={onDeleted} /> }
       </Container>
     </>
   )
