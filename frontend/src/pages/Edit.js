@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Container from "@material-ui/core/Container";
-import useStyles from "../styles/styles";
-import { LinearProgress } from "@material-ui/core";
-import { useFormik } from "formik";
+import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+
 import BookApi from "../api/book";
+import Button from "@material-ui/core/Button";
+import Container from "@material-ui/core/Container";
+import { LinearProgress } from "@material-ui/core";
 import Loading from "../components/Loading";
+import Store from "../store";
+import TextField from "@material-ui/core/TextField";
+import { useFormik } from "formik";
+import useStyles from "../styles/styles";
 
 const Edit = () => {
   const classes = useStyles();
@@ -27,22 +29,28 @@ const Edit = () => {
     }, {});
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await BookApi.get(id);
+  const fetchData = async () => {
+    const result = await BookApi.get(id);
 
-      if (result.data) {
-        setBook(result.data);
-        formik.setValues(result.data);
-      } else {
-        //avisar que aconteceu algum erro
-      }
+    if (result.data) {
+      setBook(result.data);
+      formik.setValues(result.data);
+    } else {
+      Store.update((s) => {
+        s.alert = {
+          type: "error",
+          title: "Ocorreu um problema :S",
+          message: result.error,
+        };
+      });
 
-      setLoading(false);
-    };
+      return history.push("/");
+    }
 
-    fetchData();
-  }, [id]);
+    setLoading(false);
+  };
+
+  useEffect(() => fetchData(), []);
 
   const formik = useFormik({
     onSubmit: async (values, { setErrors }) => {
@@ -50,7 +58,14 @@ const Edit = () => {
 
       const result = await BookApi.update(book.id, values);
 
-      if (!result.errors) {
+      if (!result.errors && !result.error) {
+        Store.update((s) => {
+          s.alert = {
+            type: "success",
+            title: "Editado",
+            message: "Parabéns, seu livro foi editado com sucesso.",
+          };
+        });
         return history.push("/");
       }
 

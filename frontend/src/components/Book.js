@@ -19,8 +19,9 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import DialogBook from "./DialogBook";
 import EditIcon from "@material-ui/icons/Edit";
 import InfoIcon from "@material-ui/icons/Info";
-import auth from "../auth";
+import Store from "../store";
 import { useHistory } from "react-router";
+import { useStoreState } from "pullstate";
 import useStyles from "../styles/styles";
 import { useTheme } from "@material-ui/core/styles";
 
@@ -37,18 +38,19 @@ const DialogDelete = ({ show, book, onClose, onDeleted }) => {
   const onDelete = () => {
     onDeleted(book);
     setOpen(false);
-  }
+  };
 
   useEffect(() => {
-    setOpen(show)
-  }, [show])
+    setOpen(show);
+  }, [show]);
 
   return (
     <Dialog fullScreen={fullScreen} open={open} onClose={handleClose}>
       <DialogTitle>Deletar livro</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Tem certeza que deseja remover o livro "<strong>{book.title}</strong>" ?
+          Tem certeza que deseja remover o livro "<strong>{book.title}</strong>"
+          ?
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -66,16 +68,22 @@ const DialogDelete = ({ show, book, onClose, onDeleted }) => {
 const ButtonActions = ({ book, onDeleted }) => {
   const classes = useStyles();
   const history = useHistory();
-  const [ show, setShow ] = useState(false);
+  const [show, setShow] = useState(false);
+  const { isAuthenticated } = useStoreState(Store);
 
   const onEdit = (book) => {
     history.push(`/books/${book.id}`);
   };
 
-  if (auth.isAuthenticated()) {
+  if (isAuthenticated) {
     return (
       <>
-        <DialogDelete show={show} book={book} onClose={() => setShow(false)} onDeleted={onDeleted} />
+        <DialogDelete
+          show={show}
+          book={book}
+          onClose={() => setShow(false)}
+          onDeleted={onDeleted}
+        />
         <CardActions className={classes.bookButtons}>
           <Button
             size="small"
@@ -117,7 +125,11 @@ const Book = ({ book, onDeleted }) => {
       />
       <Card className={classes.bookCard} elevation={0} square>
         <GridListTile key={book.title}>
-          <img src={book.image_url || "https://via.placeholder.com/200x250"} alt={book.title} className={classes.bookImage} />
+          <img
+            src={book.image_url || "https://via.placeholder.com/200x250"}
+            alt={book.title}
+            className={classes.bookImage}
+          />
           <GridListTileBar
             title={book.title}
             subtitle={<span>{book.author}</span>}

@@ -1,18 +1,20 @@
-import { Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import auth from "../auth";
-import useStyles from "../styles/styles";
+import { Fab } from "@material-ui/core";
+import Store from "../store";
 import { useHistory } from "react-router-dom";
+import { useStoreState } from "pullstate";
+import useStyles from "../styles/styles";
 
 const Add = () => {
   const classes = useStyles();
   const history = useHistory();
+  const { isAuthenticated } = useStoreState(Store);
 
   const onAdd = () => {
     history.push("/books/add");
   };
 
-  if (!auth.isAuthenticated()) {
+  if (!isAuthenticated) {
     return <></>;
   }
 

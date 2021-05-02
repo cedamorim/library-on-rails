@@ -1,7 +1,12 @@
+import Store from "./store";
 import api from "./api";
 
 const auth = {
   isAuthenticated() {
+    Store.update(s => {
+      s.isAuthenticated = !!this.token();
+    });
+
     return !!this.token();
   },
 
@@ -17,6 +22,10 @@ const auth = {
         return data.error;
       }
 
+      Store.update(s => {
+        s.isAuthenticated = true;
+      });
+
       localStorage.token = data.token;
       return true;
     } catch (e) {
@@ -25,6 +34,10 @@ const auth = {
   },
 
   logout() {
+    Store.update(s => {
+      s.isAuthenticated = false;
+    });
+    
     localStorage.clear();
   },
 };

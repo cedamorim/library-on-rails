@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+
+import BookApi from "../api/book";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
-import useStyles from "../styles/styles";
 import { LinearProgress } from "@material-ui/core";
+import Store from "../store";
+import TextField from "@material-ui/core/TextField";
 import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
-import BookApi from "../api/book";
+import useStyles from "../styles/styles";
 
 const New = () => {
   const classes = useStyles();
@@ -36,6 +38,13 @@ const New = () => {
       const result = await BookApi.create(values);
 
       if (!result.errors) {
+        Store.update((s) => {
+          s.alert = {
+            type: "success",
+            title: "Sucesso",
+            message: "Parabéns, você acabou de adicionar um novo livro.",
+          };
+        });
         return history.push("/");
       }
 

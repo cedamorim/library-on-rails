@@ -1,4 +1,5 @@
 import Add from "../components/Add";
+import Alert from "../components/Alert";
 import BookApi from "../api/book";
 import Books from "../components/Books";
 import { Container } from "@material-ui/core";
@@ -12,9 +13,14 @@ import useStyles from "../styles/styles";
 
 const Index = () => {
   const classes = useStyles();
-  const { books, booksCount, filter, params, currentPage, isLoading } = useStoreState(
-    Store
-  );
+  const {
+    books,
+    booksCount,
+    filter,
+    params,
+    currentPage,
+    isLoading,
+  } = useStoreState(Store);
 
   const fetchData = async (page) => {
     Store.update((s) => {
@@ -33,7 +39,11 @@ const Index = () => {
     } else {
       Store.update((s) => {
         s.isLoading = false;
-        s.error = "Ops, aconteceu um erro ao carregar os dados da página";
+        s.alert = {
+          type: "error",
+          title: "Ocorreu um problema :S",
+          message: "Ops, aconteceu um erro ao carregar os dados da página",
+        };
       });
     }
 
@@ -44,8 +54,12 @@ const Index = () => {
     const result = await BookApi.delete(bookDeleted.id);
 
     if (result.error) {
-      Store.update((s) => {
-        s.error = result.error;
+      return Store.update((s) => {
+        s.alert = {
+          type: "error",
+          title: "Deletar livro",
+          message: result.error,
+        };
       });
     }
 
@@ -61,10 +75,12 @@ const Index = () => {
   };
 
   const filterBooksBy = () => {
-    const regex = new RegExp(`${filter}`, 'gi');
+    const regex = new RegExp(`${filter}`, "gi");
 
-    return [...books].filter((book) => regex.test(book.title) || regex.test(book.author))
-  }
+    return [...books].filter(
+      (book) => regex.test(book.title) || regex.test(book.author)
+    );
+  };
 
   useEffect(() => fetchData(1), []);
 
@@ -77,6 +93,7 @@ const Index = () => {
           isLoading ? classes.booksLoading : ""
         }`}
       >
+        <Alert />
         <Filter />
         <Books books={filterBooksBy()} onDeleted={onDeleted} />
         {booksCount > 0 ? (
@@ -87,7 +104,7 @@ const Index = () => {
             color="primary"
             className={classes.pagination}
             onChange={onChange}
-            showFirstButton 
+            showFirstButton
             showLastButton
             disabled={isLoading}
           />
