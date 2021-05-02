@@ -3,10 +3,19 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
-  headers: localStorage.token && {
-    Authorization: `Bearer ${localStorage.token}`,
-  },
 });
+
+instance.interceptors.request.use(
+  (config) => {
+    if (localStorage.token) {
+      config.headers["Authorization"] = `Bearer ${localStorage.token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 instance.interceptors.response.use(
   (response) => response,

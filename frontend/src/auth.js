@@ -3,10 +3,6 @@ import api from "./api";
 
 const auth = {
   isAuthenticated() {
-    Store.update(s => {
-      s.isAuthenticated = !!this.token();
-    });
-
     return !!this.token();
   },
 
@@ -34,6 +30,7 @@ const auth = {
   },
 
   logout() {
+
     Store.update(s => {
       s.isAuthenticated = false;
     });
@@ -41,5 +38,9 @@ const auth = {
     localStorage.clear();
   },
 };
+
+Store.update(s => {
+  s.isAuthenticated = auth.isAuthenticated();
+});
 
 export default auth;

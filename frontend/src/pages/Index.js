@@ -82,7 +82,11 @@ const Index = () => {
     );
   };
 
-  useEffect(() => fetchData(1), []);
+  useEffect(() => {
+    if (!books.length){
+      fetchData(1);
+    }
+  }, []);
 
   return (
     <>
@@ -98,7 +102,7 @@ const Index = () => {
         <Books books={filterBooksBy()} onDeleted={onDeleted} />
         {booksCount > 0 ? (
           <Pagination
-            count={Math.ceil(booksCount / 50)}
+            count={Math.ceil(booksCount / 30)}
             page={currentPage}
             variant="outlined"
             color="primary"

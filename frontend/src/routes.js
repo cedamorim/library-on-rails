@@ -14,7 +14,8 @@ const PrivateRoutes = () => {
       s.alert = {
         type: "warning",
         title: "Login requerido",
-        message: "Ops, esta página é protegida e depende de um acesso de administrador.",
+        message:
+          "Ops, esta página é protegida e depende de um acesso de administrador.",
       };
     });
 
@@ -22,10 +23,10 @@ const PrivateRoutes = () => {
   }
 
   return (
-    <>
+    <Switch>
       <Route exact path="/books/add" component={New} />
       <Route exact path="/books/:id" component={Edit} />
-    </>
+    </Switch>
   );
 };
 

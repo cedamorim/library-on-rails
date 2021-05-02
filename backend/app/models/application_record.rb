@@ -1,7 +1,7 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
-  PAGE_SIZE = 50
+  PAGE_SIZE = 30
 
   def self.paginate(page)
     offset(page_offset(page))

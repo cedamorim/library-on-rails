@@ -1,4 +1,5 @@
 import { Container, Typography } from "@material-ui/core";
+
 import useStyles from "../styles/styles";
 
 const Hero = () => {
@@ -14,12 +15,11 @@ const Hero = () => {
           color="textPrimary"
           gutterBottom
         >
-          Livros
+          Library On Rails
         </Typography>
         <Typography variant="h5" align="center" color="textSecondary" paragraph>
-          Something short and leading about the collection below—its contents,
-          the creator, etc. Make it short and sweet, but not too short so folks
-          don&apos;t simply skip over it entirely.
+          Bem vindo ao sistema onde você pode catalogar seus livros, fique a
+          vontade para cadastrar, editar e até remover seus livros
         </Typography>
       </Container>
     </div>

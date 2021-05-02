@@ -57,7 +57,8 @@ const useStyles = makeStyles((theme) => ({
 
   bookCard: {
     padding: "0px",
-    margin: "2px"
+    margin: "2px",
+    border: "1px solid #eee"
   },
 
   bookButtons: {
@@ -91,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1),
   },
 
@@ -155,7 +156,6 @@ const useStyles = makeStyles((theme) => ({
 
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
     width: "100%",
