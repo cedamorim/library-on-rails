@@ -5,6 +5,14 @@ const BookApi = {
     return await this.try(api.get("/books", params));
   },
 
+  async get(id) {
+    return await this.try(api.get(`/books/${id}`));
+  },
+
+  async update(id, params) {
+    return await this.try(api.patch(`/books/${id}`, params));
+  },
+
   async delete(id) {
     return await this.try(api.delete(`/books/${id}`));
   },
@@ -14,8 +22,8 @@ const BookApi = {
       const { data } = await request;
 
       return { data };
-    } catch ({ data: { error } }) {
-      return { error };
+    } catch ({ data: { error, errors } }) {
+      return { error, errors };
     }
   },
 };

@@ -122,6 +122,14 @@ const useStyles = makeStyles((theme) => ({
 
   dialogText: {
     textAlign: 'justify'
+  },
+
+  buttonEdit: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    '& > button': {
+      marginLeft: '10px'
+    }
   }
 
 }));

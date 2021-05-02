@@ -68,6 +68,8 @@ export default function Login() {
             helperText={formik.touched.password && formik.errors.password}
             disabled={loading}
           />
+
+          {loading ? <LinearProgress /> : ""}
           <Button
             type="submit"
             fullWidth
@@ -78,7 +80,6 @@ export default function Login() {
           >
             Entrar
           </Button>
-          {loading ? <LinearProgress /> : ""}
         </form>
       </div>
     </Container>
