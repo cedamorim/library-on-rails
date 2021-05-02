@@ -3,8 +3,10 @@ class BooksController < ApplicationController
   before_action :find_book, only: %i[update destroy show]
 
   def index
-    @books = Book.paginate(filter_params[:page])
-                 .search(filter_params[:search])
+    search = Book.search(filter_params[:search])
+
+    @books = search.paginate(filter_params[:page])
+    @books_count = search.count
   end
 
   def create

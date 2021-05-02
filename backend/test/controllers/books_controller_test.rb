@@ -16,14 +16,14 @@ class BooksControllerTest < ActionDispatch::IntegrationTest
     get '/api/books?search=Autor 1'
 
     assert_response :success
-    assert_equal 1, JSON.parse(@response.body.to_s).length
+    assert_equal 1, JSON.parse(@response.body.to_s)['books_count']
   end
 
   test 'filtrando um author que não existe, não deve retornar nada' do
     get '/api/books?search=Autor inexistente'
 
     assert_response :success
-    assert_equal 0, JSON.parse(@response.body.to_s).length
+    assert_equal 0, JSON.parse(@response.body.to_s)['books_count']
   end
 
   # POST
