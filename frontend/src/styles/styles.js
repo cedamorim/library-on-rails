@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   booksLoading: {
-    opacity: "0.6"
+    opacity: "0.6",
   },
 
   books: {
@@ -58,7 +58,13 @@ const useStyles = makeStyles((theme) => ({
   bookCard: {
     padding: "0px",
     margin: "2px",
-    border: "1px solid #eee"
+    border: "1px solid #eee",
+  },
+
+  bookCardContent: {
+    padding: "0px",
+    width: "200px",
+    height: "250px",
   },
 
   bookButtons: {
@@ -176,18 +182,17 @@ const useStyles = makeStyles((theme) => ({
   },
 
   filter: {
-    marginBottom: '30px',
-    marginTop: '20px',
-    display: 'flex',
-    '& .MuiTextField-root': {
-      marginRight: '10px',
-      flex: 1
+    marginBottom: "30px",
+    marginTop: "20px",
+    display: "flex",
+    "& .MuiTextField-root": {
+      marginRight: "10px",
+      flex: 1,
     },
-    '& .MuiTextField-root:first-child': {
-      flex: 2
-    }
-  }
-
+    "& .MuiTextField-root:first-child": {
+      flex: 2,
+    },
+  },
 }));
 
 export default useStyles;

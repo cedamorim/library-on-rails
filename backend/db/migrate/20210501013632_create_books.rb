@@ -7,5 +7,8 @@ class CreateBooks < ActiveRecord::Migration[6.1]
       t.string :image_url, null: false
       t.timestamps
     end
+
+    add_index :title
+    add_index :author
   end
 end

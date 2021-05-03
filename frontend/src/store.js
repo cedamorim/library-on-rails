@@ -12,9 +12,15 @@ const Store = new PullStateStore({
     {value: 'author', label: 'Autor'}
   ],
   directionOptions: [
-    {value: 'asc', label: 'Ascendente'},
+    {value: 'asc', label: 'Crescente'},
     {value: 'desc', label: 'Decrescente'}
-  ]
+  ],
+  params: {
+    search: '', 
+    orderBy: 'title',
+    direction: 'asc',
+    page: 1
+  }
 });
 
 export default Store;

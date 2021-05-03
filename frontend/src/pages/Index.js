@@ -16,7 +16,6 @@ const Index = () => {
   const {
     books,
     booksCount,
-    filter,
     params,
     currentPage,
     isLoading,
@@ -74,14 +73,6 @@ const Index = () => {
     }
   };
 
-  const filterBooksBy = () => {
-    const regex = new RegExp(`${filter}`, "gi");
-
-    return [...books].filter(
-      (book) => regex.test(book.title) || regex.test(book.author)
-    );
-  };
-
   useEffect(() => {
     if (!books.length){
       fetchData(1);
@@ -99,7 +90,7 @@ const Index = () => {
       >
         <Alert />
         <Filter />
-        <Books books={filterBooksBy()} onDeleted={onDeleted} />
+        <Books books={books} onDeleted={onDeleted} />
         {booksCount > 0 ? (
           <Pagination
             count={Math.ceil(booksCount / 30)}

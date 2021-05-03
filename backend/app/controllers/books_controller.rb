@@ -3,10 +3,10 @@ class BooksController < ApplicationController
   before_action :find_book, only: %i[update destroy show]
 
   def index
-    search = Book.search(filter_params[:search])
+    search = Book.search(filter_params)
 
-    @books = search.paginate(filter_params[:page])
     @books_count = search.count
+    @books = search.paginate(filter_params[:page])
   end
 
   def create
@@ -44,6 +44,6 @@ class BooksController < ApplicationController
   end
 
   def filter_params
-    params.permit(:search, :page)
+    params.permit(:search, :orderBy, :direction, :page)
   end
 end

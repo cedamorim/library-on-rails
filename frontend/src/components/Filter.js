@@ -1,5 +1,6 @@
 import { InputAdornment, MenuItem, TextField } from "@material-ui/core";
 
+import BookApi from "../api/book";
 import SearchIcon from "@material-ui/icons/Search";
 import Store from "../store";
 import { useStoreState } from "pullstate";
@@ -8,45 +9,70 @@ import useStyles from "../styles/styles";
 const Filter = () => {
   const classes = useStyles();
   const {
-    books,
+    filter,
+    currentPage,
     sortOptions,
     directionOptions,
     sortBy,
     directionBy,
   } = useStoreState(Store);
 
-  const order = (books, sort, direction) => {
-    const sortedBooks = [...books].sort((book, nextBook) =>
-      book[sort].localeCompare(nextBook[sort])
-    );
-
-    if (direction === "desc") {
-      return sortedBooks.reverse();
-    }
-
-    return sortedBooks;
+  const debounce = (func, wait) => {
+    let timeout;
+    return function (...args) {
+      const context = this;
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        timeout = null;
+        func.apply(context, args);
+      }, wait);
+    };
   };
 
-  const onFiltered = ({ target }) => {
+  const search = async (filter, sort, direction, page = currentPage) => {
+    const params = {
+      search: filter,
+      orderBy: sort,
+      direction: direction,
+      page: page,
+    };
+
+    const { data } = await BookApi.index(params);
+
     Store.update((s) => {
-      s.filter = target.value;
+      s.books = data.books;
+      s.booksCount = data.books_count;      
+      s.params = params;
+      s.currentPage = page;
     });
   };
+
+  const onFiltered = debounce(({ target }) => {
+    const newFilter = target.value;
+
+    search(newFilter, sortBy, directionBy, 1);
+
+    Store.update((s) => {
+      s.filter = newFilter;
+    });
+  }, 500);
 
   const onSortBy = ({ target }) => {
     const newSortedBy = target.value;
 
+    search(filter, newSortedBy, directionBy);
+
     Store.update((s) => {
-      s.books = order(books, newSortedBy, directionBy);
       s.sortBy = newSortedBy;
     });
   };
 
-  const onDirectionBy = ({ target }) => {
+  const onDirectionBy = async ({ target }) => {
     const newDirectionBy = target.value;
 
+    search(filter, sortBy, newDirectionBy);
+
     Store.update((s) => {
-      s.books = order(books, sortBy, newDirectionBy);
       s.directionBy = newDirectionBy;
     });
   };
@@ -56,6 +82,7 @@ const Filter = () => {
       <TextField
         variant="outlined"
         label="Filtre por titulo ou autor"
+        defaultValue={filter}
         onChange={onFiltered}
         InputProps={{
           endAdornment: (

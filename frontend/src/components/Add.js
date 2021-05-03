@@ -1,5 +1,6 @@
+import { Fab, Tooltip } from "@material-ui/core";
+
 import AddIcon from "@material-ui/icons/Add";
-import { Fab } from "@material-ui/core";
 import Store from "../store";
 import { useHistory } from "react-router-dom";
 import { useStoreState } from "pullstate";
@@ -19,14 +20,16 @@ const Add = () => {
   }
 
   return (
-    <Fab
-      color="primary"
-      aria-label="adicionar"
-      className={classes.addButton}
-      onClick={onAdd}
-    >
-      <AddIcon />
-    </Fab>
+    <Tooltip title="Clique aqui para adicionar um novo livro">
+      <Fab
+        color="primary"
+        aria-label="adicionar"
+        className={classes.addButton}
+        onClick={onAdd}
+      >
+        <AddIcon />
+      </Fab>
+    </Tooltip>
   );
 };
 

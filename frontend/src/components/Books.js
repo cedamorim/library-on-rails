@@ -3,7 +3,7 @@ import { GridList } from "@material-ui/core";
 import useStyles from "../styles/styles";
 
 const Result = ({ books, onDeleted }) => {
-  if (!books.length) {
+  if (!books?.length) {
     return <div>Infelizmente não encontramos nenhum livro :(</div>;
   }
 

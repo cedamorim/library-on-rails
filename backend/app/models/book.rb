@@ -7,8 +7,23 @@ class Book < ApplicationRecord
 
   validates :image_url, presence: true, allow_blank: false
 
-  scope :search, lambda { |search|
-                   where('author like ? or title like ?', "%#{search}%", "%#{search}%")
-                     .order('title')
+  scope :search, lambda { |params|
+                   where('author like ?', "%#{params[:search]}%")
+                     .or(where('title like ?', "%#{params[:search]}%").or(
+                           where('description like ?', "%#{params[:search]}%")
+                         ))
+                     .order(order_by(params[:orderBy], params[:direction]))
                  }
+
+  def self.safe_direction(direction)
+    %w[asc desc].include?(direction) ? direction : 'asc'
+  end
+
+  def self.safe_order(order)
+    %w[title author].include?(order) ? order : 'title'
+  end
+
+  def self.order_by(order, direction)
+    "#{safe_order(order)} #{safe_direction(direction)}"
+  end
 end

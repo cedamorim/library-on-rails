@@ -2,6 +2,7 @@ import {
   Button,
   Card,
   CardActions,
+  CardContent,
   Dialog,
   DialogActions,
   DialogContent,
@@ -124,25 +125,27 @@ const Book = ({ book, onDeleted }) => {
         image_url={book.image_url}
       />
       <Card className={classes.bookCard} elevation={0} square>
-        <GridListTile key={book.title}>
-          <img
-            src={book.image_url || "https://via.placeholder.com/200x250"}
-            alt={book.title}
-            className={classes.bookImage}
-          />
-          <GridListTileBar
-            title={book.title}
-            subtitle={<span>{book.author}</span>}
-            style={{ bottom: "6px" }}
-            actionIcon={
-              <Tooltip title="Clique aqui para ver as informações completa do livro">
-                <IconButton onClick={() => setShow(true)}>
-                  <InfoIcon className={classes.icon} />
-                </IconButton>
-              </Tooltip>
-            }
-          />
-        </GridListTile>
+        <CardContent style={{padding: '0px', width: '200px', height: '250px'}}>
+          <GridListTile key={book.title}>
+            <img
+              src={book.image_url || "https://via.placeholder.com/200x250"}
+              alt={book.title}
+              className={classes.bookImage}
+            />
+            <GridListTileBar
+              title={book.title}
+              subtitle={<span>{book.author}</span>}
+              style={{ bottom: "6px" }}
+              actionIcon={
+                <Tooltip title="Clique aqui para ver as informações completa do livro">
+                  <IconButton onClick={() => setShow(true)}>
+                    <InfoIcon className={classes.icon} />
+                  </IconButton>
+                </Tooltip>
+              }
+            />
+          </GridListTile>
+        </CardContent>
         <ButtonActions book={book} onDeleted={onDeleted} />
       </Card>
     </>
